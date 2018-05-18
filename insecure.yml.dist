@@ -1,0 +1,39 @@
+# Hippson
+
+logins:
+# nameId: login
+    noreply: no-reply-dev@..com
+    admin: ..@..com
+    test: ..@..com
+    newuser: ..@..com
+    newcampany: ..@..com
+passwds:
+# nameId: passwd
+    admin: 111111
+    test: 111111
+    newuser: 111111
+    newcampany: 111111
+usernames:
+# nameId: username
+    admin: Firstname1 Lastname1
+    test: Firstname2 Lastname2
+    newuser: Firstname3 Lastname4
+    newcampany: Campany name
+
+urls:
+    dev: http://..com
+    prod: https://..com
+    base: http://..com
+
+pathto:
+    logfile: ./log.txt
+    screenshots: ./Screenshots/
+    files: ./toUpload/
+
+email:
+    protocol: mail.store.protocol
+    store: imaps
+    connect: mail...com
+    folder: inbox
+    account: ..@..com
+    password: com

@@ -1,0 +1,65 @@
+# Hippson
+
+browser:
+    CHROME_HEADLESS
+#browser: FIREFOX_HEADLESS
+
+dimension:
+    width: 1200
+    hight: 1800
+
+csss:
+    confirmlinks:
+       registration: "td[align=left] > a"
+       moderation: ""
+       accepted: ""
+    loginpage:
+       email: "#email"
+       password: "#password"
+       submit: "button[name=_submit]"
+    registerpage:
+       firstNameIn: "input[name='fos_user_registration_form[firstName]']"
+       lastNameIn: "input[name='fos_user_registration_form[lastName]']"
+       yourEmailIn: "input[name='fos_user_registration_form[email]']"
+       passwordNewIn: "input[name='fos_user_registration_form[plainPassword][first]']"
+       passwordConfirmIn: "input[name='fos_user_registration_form[plainPassword][second]']"
+       telephoneIn: "input[name='fos_user_registration_form[phone][telephone]']"
+       placeSel: "select[name='fos_user_registration_form[place]']"
+       termsAccepted: "input[name='fos_user_registration_form[termsAccepted]']"
+       registerSubmit: "button[type=submit].btn--cyan"
+       gotoStartPage: "div.main__thin-center > a"
+    adminpage:
+       items: "td > a"
+    batchaction:
+       confirmActionBtn: "button.btn-danger"
+    thankyoupage:
+       txtContent: ""       
+
+flowsss:
+    loginlogout:
+#0
+      - csss: "" # css selector to check html state before running a command
+        hash: "" # hashcode of the element's innerHTML
+
+    registerPerson:
+#0
+      - csss: "" # css selector to check html state before running a command
+        hash: "" # hashcode of the element's innerHTML
+    
+patterns:
+#  id: pattern
+    1: xxxxx
+    2: yyyyy
+
+logger:
+    debug: false
+    action: true
+    info: true
+    passed: true
+    warning: true
+    failed: true
+
+runtests: 
+#   - loginlogout
+   - registerPerson
+#   - startcampaign
