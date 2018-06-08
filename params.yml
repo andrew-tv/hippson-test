@@ -52,7 +52,7 @@ patterns:
     2: yyyyy
 
 logger:
-    debug: false
+    debug: true
     action: true
     info: true
     passed: true

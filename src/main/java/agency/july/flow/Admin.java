@@ -18,11 +18,6 @@ import agency.july.webelements.TextInput;
 public class Admin extends User {
 	
 	// Admin page
-	private TextInput searchQuery;	
-	private Element searchBtn;	
-	private Element dropdownMenuBtn;	
-	private Element deleteUserBtn;	
-	private Element confirmDeleteUserBtn;
 	
 	// Moderation page	    
 	private Element acceptedModeration;	
@@ -30,7 +25,6 @@ public class Admin extends User {
 
 	public Admin(Flow flow) {
 		super(flow);
-//	    goHome();	    
 	}
 	
 	public Admin withUser(String user) {
@@ -40,7 +34,7 @@ public class Admin extends User {
 		String[] fullName = this.userFullName.split(" +");
 		this.userFirstName = fullName[0];
 		this.userLastName = fullName[1];
-		this.userTel = "+380507502818";
+		this.userTel = "+380501111111";
 		return this;
 	}
 	
@@ -49,24 +43,14 @@ public class Admin extends User {
 		confirmActionBtn.click();
 	}
 
-	public void setModeratorRole43(boolean tick) {
-		WebDriverWait wait = new WebDriverWait(driver, 5);
-//		driver.get(editUser43);
-		wait.until(ExpectedConditions.titleContains("Edit User (#43)"));
-		
-		WebElement checkboxModerator = driver.findElement(By.cssSelector("input[value='ROLE_MODERATOR']"));
-		if ( tick && checkboxModerator.getAttribute("checked") == null ) checkboxModerator.click();
-		if ( !tick && checkboxModerator.getAttribute("checked") != null ) checkboxModerator.click();
-		driver.findElement(By.cssSelector("button.action-save")).click();		
-	}
-	
 	public void removeUser(String userEmail) {
 		
-		ACTION.writeln("Remove an user : " + userEmail);		
+		ACTION.writeln("Remove a user : " + userEmail);		
 		flow.setDriver(driver);
 		
 		driver.get(getBaseUrl() + "/admin/hippsonuser/user/list");
 		List <WebElement> emails = driver.findElements(By.cssSelector(Configuration.getCsss().get("adminpage").get("items")));
+		
 		for (int i=0; i<emails.size(); i++) {
 			if ( emails.get(i).getText().contains(userEmail) ) {
 				driver.get( emails.get(i).getAttribute("href").replaceAll("/edit$", "/delete") ); // Delete user by direct link
@@ -74,30 +58,6 @@ public class Admin extends User {
 				break;
 			}
 		}
-	}
-
-	public void removeCampaign(String campaignName) {
-		
-		ACTION.writeln("Remove campaign");		
-		flow.setDriver(driver);
-		
-		try {
-			
-			searchQuery.set(campaignName);
-			searchBtn.click();
-			dropdownMenuBtn.click();
-			deleteUserBtn.click();
-			confirmDeleteUserBtn.click();
-			
-			flow.waitForHtmlHash(By.cssSelector("td.no-results"));
-			
-		} catch (TestFailedException e) {
-			throw new TestFailedException();
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new TestFailedException();
-		}
-
 	}
 
 	public void confirmModeration() {

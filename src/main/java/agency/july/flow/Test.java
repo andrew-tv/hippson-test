@@ -2,6 +2,8 @@ package agency.july.flow;
 
 import static agency.july.logger.Logevent.*;
 
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
@@ -29,6 +31,8 @@ public abstract class Test {
     	setDriver( Configuration.getBrowser() );
     	Dimension dim = new Dimension(Configuration.getDimension().get("width"), Configuration.getDimension().get("hight"));
     	this.driver.manage().window().setSize( dim );
+    	this.driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    	this.driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
     	this.flow = flow;
     }
     

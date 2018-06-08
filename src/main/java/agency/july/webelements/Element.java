@@ -69,12 +69,12 @@ public class Element {
 	
 	public void click () {
 
-		WebDriverWait wait = new WebDriverWait(parentFlow.getDriver(), 5);
+//		WebDriverWait wait = new WebDriverWait(parentFlow.getDriver(), 5);
 		if ( this.bytoWait != null ) parentFlow.waitForHtmlHash(this.bytoWait);
 
 		refresh();
 		
-		wait.until( ExpectedConditions.elementToBeClickable(by) );
+//		wait.until( ExpectedConditions.elementToBeClickable(by) );
 		this.el.click();
 		
 		if ( this.bytoWait != null ) parentFlow.incSlideNumber();				

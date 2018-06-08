@@ -84,16 +84,14 @@ public class User extends Test {
 
 	public void login () {
 		
-		ACTION.writeln("Login user : " + this.userEmail);		
+		ACTION.writeln("Login a user : " + this.userEmail);		
 		flow.setDriver(driver);
 		
 		try {
 			driver.get(getBaseUrl() + "/login");
-			
 			emailIn.set(getUserEmail());
 			passwordIn.set(userPasswd);		
-			submitBtn.click();
-	    
+			submitBtn.click();	    
 		} catch (TestFailedException e) {
 			throw new TestFailedException();
 		} catch (Exception e) {
@@ -119,8 +117,8 @@ public class User extends Test {
 			telephoneIn.set(userTel);
 			placeSel.set("w");
 			
-			driver.findElement(termsAccepted.getBy()).click();
-//			termsAccepted.click();
+			//			driver.findElement(termsAccepted.getBy()).click();
+			termsAccepted.click();
 			registerSubmit.click();
 			
 			wait.until( ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.page__description > strong")) );

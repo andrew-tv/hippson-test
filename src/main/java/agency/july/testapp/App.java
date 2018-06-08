@@ -15,6 +15,7 @@ import agency.july.config.models.Accesses;
 import agency.july.config.models.Configuration;
 import agency.july.flow.Admin;
 import agency.july.flow.Flow;
+import agency.july.flow.Test;
 import agency.july.flow.TestFailedException;
 import agency.july.flow.User;
 import agency.july.logger.TestingLogger;
@@ -42,10 +43,16 @@ public class App {
 			PASSED.setEnable(Configuration.getLogger().get("passed"));
 			FAILED.setEnable(Configuration.getLogger().get("failed"));
 			
+			// Check access to dev and product
+//			Flow flow = new Flow( "access" );
+//			Test access = new User( flow );
+//			Admin admin = new Admin( flow ).withUser("admin");
+//			admin.login();
+			
+
+			
 			// Определяем потоки выполнения. Каждый тест в своем потоке
-			Thread threadLoginLogout = null;
-			Thread threadRegisterWithEmail = null;
-			Thread threadStartcampaign = null;
+			Thread threadRegisterPerson = null;
 			
 			// Основное цикл по тестам
 			List <String> runningTests = Configuration.getRuntests();
@@ -56,40 +63,12 @@ public class App {
 				
 					case "loginlogout" : 
 				
-					threadLoginLogout = new Thread (new Runnable() {
-						public void run() {
-							
-							Flow flow = new Flow( "loginlogout" );
 
-							User user = new User( flow ).withUser( "test" );
-							
-							try {			
-								
-					            user.login(); 
-					            PASSED.writeln("Login an user");
-//						            user.logout(); 
-					            PASSED.writeln("Logout an user");
-					            
-							} catch (TestFailedException e) {
-								flow.makeScreenshot();
-								FAILED.writeln("Login or logout user with email '" + user.getUserEmail() + "' has been failed. Flow name:'" + flow.getFlowName() + "'. Current slide #" + flow.getCurrentSlide());
-							} catch (Exception e) {
-								flow.makeScreenshot();
-								FAILED.writeln("Login or logout user with email '" + user.getUserEmail() + "' has been failed. Flow name:'" + flow.getFlowName() + "'. Current slide #" + flow.getCurrentSlide());
-								e.printStackTrace();
-							} finally {
-					            INFO.writeln("Login and logout user test finished");
-					            user.teardown();
-							}
-						}
-					});
-					threadLoginLogout.setName("LoginLogout");
-					threadLoginLogout.start();
 					break;
 					
 					case "registerPerson" : 
 						
-						threadRegisterWithEmail = new Thread (new Runnable() {
+						threadRegisterPerson = new Thread (new Runnable() {
 						public void run() {
 							Flow flow = new Flow("registerPerson");
 				            User user = new User( flow ).withUser( "newuser" );
@@ -115,50 +94,14 @@ public class App {
 							}
 						}
 					});
-					threadRegisterWithEmail.setName("RegisterWithEmail");
-					threadRegisterWithEmail.start();
+					threadRegisterPerson.setName("registerPerson");
+					threadRegisterPerson.start();
 					break;
-					
-					case "startcampaign" : 
-						
-						threadStartcampaign = new Thread (new Runnable() {
-						public void run() {
-							
-							Flow flow = new Flow( "startcampaign" );
-
-							User user = new User( flow ).withUser( "test" );
-				            Admin admin = new Admin( flow ).withUser( "admin" );
-							
-							try {			
-								
-								admin.login(); 
-					            user.login();
-					            
-							} catch (TestFailedException e) {
-								flow.makeScreenshot();
-								FAILED.writeln("Start Campaign flow has been failed. Flow name:'" + flow.getFlowName() + "'. Current slide #" + flow.getCurrentSlide());
-							} catch (Exception e) {
-								flow.makeScreenshot();
-								FAILED.writeln("Start Campaign flow has been failed. Flow name:'" + flow.getFlowName() + "'. Current slide #" + flow.getCurrentSlide());
-								e.printStackTrace();
-							} finally {
-					            INFO.writeln("Start Campaign test finished");
-					            user.teardown();
-					            admin.teardown();
-							}
-						}
-					});
-						threadStartcampaign.setName("StartCampaign");
-						threadStartcampaign.start();
-					break;
-
 				}
 			}
 			
 			// Ожидание выполнения всех потоков (тестов)
-			if (threadLoginLogout != null) threadLoginLogout.join();
-			if (threadRegisterWithEmail != null) threadRegisterWithEmail.join();
-			if (threadStartcampaign != null) threadStartcampaign.join();
+			if (threadRegisterPerson != null) threadRegisterPerson.join();
 
 		} catch (FileNotFoundException e1) {
 			System.out.println("Could not load configuration file: ./params.yml");
